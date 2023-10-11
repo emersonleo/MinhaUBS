@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/minha_ubs.iml" filepath="$PROJECT_DIR$/minha_ubs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/minha_ubs_android.iml" filepath="$PROJECT_DIR$/android/minha_ubs_android.iml" />
     </modules>
   </component>
 </project>
