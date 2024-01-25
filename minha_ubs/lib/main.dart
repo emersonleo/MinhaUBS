@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,26 +16,37 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Minha UBS',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const ScreenSplash(title: 'Minha Ubs'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class ScreenSplash extends StatefulWidget {
+  const ScreenSplash({super.key, required this.title});
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<ScreenSplash> createState() => _ScreenSplashState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _ScreenSplashState extends State<ScreenSplash> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(const Duration(seconds: 1), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const Login()),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,10 +55,14 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/images/mainIcon.png', width: 150, height: 150),
+            Image.asset('images/minhaUbsICon.png', width: 150, height: 150),
             Text('Minha UBS',
                 style: GoogleFonts.notoSans(
-                    color: Color(0x00A038), fontSize: 24, fontWeight: FontWeight.bold)),
+                  //color: Color(0x00A038),
+                  color: Colors.green,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                )),
           ],
         ),
       ),
