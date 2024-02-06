@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:minha_ubs/components/TextFieldBuilder.dart';
+import 'package:minha_ubs/screens/recoverypassword.dart';
+import 'package:minha_ubs/screens/signin.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -15,71 +18,78 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    TextFieldBuilder loginTextField =
+        TextFieldBuilder("Login", Icons.alternate_email, this);
+    TextFieldBuilder senhaTextField =
+        TextFieldBuilder("Senha", Icons.lock, this);
+
     return Scaffold(
       body: Container(
         color: const Color(0xFFF5F5F5),
-        child: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            getLogo(),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Login',
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 16),
+          child: ListView(
+            //mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              getLogo(),
+              loginTextField.getTextfield(),
+              senhaTextField.getTextfieldWithSufix(),
+              Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const RecoveryPassword()),
+                    );
+                  },
+                  child: Text(
+                    'Esqueci a senha',
+                    style: GoogleFonts.montserrat(
+                      color: Color(0xFF00521D),
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              ]),
+              ElevatedButton(
+                onPressed: () {
+                  // Ação para entrar
+                },
+                child: Text('Entrar'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF00A038),
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                 ),
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-              child: TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Senha',
+              TextButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Signin()),
+                  );
+                },
+                child: Text(
+                  'Cadastre-se',
+                  style: GoogleFonts.montserrat(
+                    color: Color(0xFF00521D),
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    decoration: TextDecoration.underline,
+                  ),
                 ),
               ),
-            ),
-          ],
-        )),
+            ],
+          ),
+        ),
       ),
     );
   }
-
-  // Column getLoginFields() {
-  //   return const Column(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     children: [
-  //       Row(
-  //         children: [
-  //           Padding(
-  //             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-  //             child: TextField(
-  //               decoration: InputDecoration(
-  //                 border: OutlineInputBorder(),
-  //                 hintText: 'Enter a search term',
-  //               ),
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //       Row(
-  //         children: [
-  //           Padding(
-  //             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-  //             child: TextField(
-  //               decoration: InputDecoration(
-  //                 border: OutlineInputBorder(),
-  //                 hintText: 'Enter a search term',
-  //               ),
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ],
-  //   );
-  // }
 
   Column getLogo() {
     return Column(

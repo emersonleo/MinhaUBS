@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'login.dart';
+import 'package:minha_ubs/screens/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -58,8 +57,8 @@ class _ScreenSplashState extends State<ScreenSplash> {
             Image.asset('images/minhaUbsICon.png', width: 150, height: 150),
             Text('Minha UBS',
                 style: GoogleFonts.notoSans(
-                  //color: Color(0x00A038),
-                  color: Colors.green,
+                  color: Color(0xFF00A038),
+                  //olor: Colors.green,
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 )),

@@ -7,13 +7,14 @@ class TextFieldBuilder {
   IconData? icon;
   State? state;
 
-  TextFieldModel(String labelTextParam, IconData iconParam, State stateParam) {
+  TextFieldBuilder(
+      String labelTextParam, IconData iconParam, State stateParam) {
     labelText = labelTextParam;
     icon = iconParam;
     state = stateParam;
   }
 
-  Padding getTexfield() {
+  Padding getTextfield() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
       child: TextField(
@@ -21,14 +22,14 @@ class TextFieldBuilder {
         obscureText: obscureText,
         decoration: InputDecoration(
           labelText: labelText,
-          border: const OutlineInputBorder(),
+          focusedBorder: const OutlineInputBorder(),
           prefixIcon: Icon(icon),
         ),
       ),
     );
   }
 
-  Padding getTexfieldWithSufix() {
+  Padding getTextfieldWithSufix() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
       child: TextField(
@@ -36,7 +37,7 @@ class TextFieldBuilder {
         obscureText: obscureText,
         decoration: InputDecoration(
           labelText: labelText,
-          border: const OutlineInputBorder(),
+          focusedBorder: const OutlineInputBorder(),
           prefixIcon: Icon(icon),
           suffixIcon: IconButton(
             icon: Icon(obscureText ? Icons.visibility : Icons.visibility_off),
