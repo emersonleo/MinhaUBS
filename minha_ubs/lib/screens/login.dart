@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:minha_ubs/components/StatefullTextFieldBuilder.dart';
 import 'package:minha_ubs/components/TextFieldBuilder.dart';
 import 'package:minha_ubs/screens/recoverypassword.dart';
 import 'package:minha_ubs/screens/signin.dart';
@@ -16,12 +17,17 @@ class _LoginState extends State<Login> {
   //   super.initState();
   // }
 
+  TextEditingController LoginController = TextEditingController();
+  TextEditingController PasswordController = TextEditingController();
+  bool passwordObscureText = true;
+
   @override
   Widget build(BuildContext context) {
     TextFieldBuilder loginTextField =
-        TextFieldBuilder("Login", Icons.alternate_email, this);
-    TextFieldBuilder senhaTextField =
-        TextFieldBuilder("Senha", Icons.lock, this);
+        TextFieldBuilder("Email", Icons.alternate_email, this, LoginController);
+    StatefullTextFieldBuilder senhaTextField =
+        new StatefullTextFieldBuilder("Senha", Icons.lock, PasswordController);
+    // TextFieldBuilder("Senha", Icons.lock, this, PasswordController);
 
     return Scaffold(
       body: Container(
@@ -33,7 +39,7 @@ class _LoginState extends State<Login> {
             children: [
               getLogo(),
               loginTextField.getTextfield(),
-              senhaTextField.getTextfieldWithSufix(),
+              senhaTextField,
               Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 TextButton(
                   onPressed: () {

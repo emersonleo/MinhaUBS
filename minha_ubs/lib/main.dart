@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Minha UBS',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
       home: const ScreenSplash(title: 'Minha Ubs'),

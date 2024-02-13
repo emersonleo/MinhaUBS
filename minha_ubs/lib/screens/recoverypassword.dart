@@ -14,10 +14,12 @@ class RecoveryPassword extends StatefulWidget {
 }
 
 class _RecoveryPasswordState extends State<RecoveryPassword> {
+  TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     TextFieldBuilder emailTextField =
-        TextFieldBuilder("email", Icons.alternate_email, this);
+        TextFieldBuilder("email", Icons.alternate_email, this, controller);
     TextBuilder titleText = TextBuilder("Esqueci a senha");
 
     return Scaffold(

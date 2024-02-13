@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../components/StatefullTextFieldBuilder.dart';
 import '../components/TextBuilder.dart';
 import '../components/TextFieldBuilder.dart';
 import 'login.dart';
@@ -12,22 +13,32 @@ class Signin extends StatefulWidget {
 }
 
 class _SigninState extends State<Signin> {
+  TextEditingController nomeController = TextEditingController();
+  TextEditingController cpfController = TextEditingController();
+  TextEditingController foneController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     TextBuilder signinTitle = TextBuilder("Cadastre-se");
 
+    TextEditingController passwordController = new TextEditingController();
+    TextEditingController confirmPasswordController =
+        new TextEditingController();
+
     TextFieldBuilder nameTextField =
-        TextFieldBuilder("Nome Completo", Icons.person, this);
+        TextFieldBuilder("Nome Completo", Icons.person, this, nomeController);
     TextFieldBuilder cpfTextField =
-        TextFieldBuilder("Cpf", Icons.badge_outlined, this);
+        TextFieldBuilder("CPF", Icons.badge_outlined, this, cpfController);
     TextFieldBuilder phoneTextField =
-        TextFieldBuilder("Fone", Icons.phone, this);
+        TextFieldBuilder("Fone", Icons.phone, this, foneController);
     TextFieldBuilder emailTextField =
-        TextFieldBuilder("Email", Icons.alternate_email, this);
-    TextFieldBuilder passwordTextField =
-        TextFieldBuilder("Senha", Icons.lock, this);
-    TextFieldBuilder confirmPasswordTextField =
-        TextFieldBuilder("Confirme a senha", Icons.lock, this);
+        TextFieldBuilder("Email", Icons.alternate_email, this, emailController);
+    StatefullTextFieldBuilder passwordTextField =
+        StatefullTextFieldBuilder("Senha", Icons.lock, passwordController);
+    StatefullTextFieldBuilder confirmPasswordTextField =
+        StatefullTextFieldBuilder(
+            "Confirme a senha", Icons.lock, confirmPasswordController);
 
     return Scaffold(
       body: Container(
@@ -61,8 +72,8 @@ class _SigninState extends State<Signin> {
               cpfTextField.getTextfield(),
               phoneTextField.getTextfield(),
               emailTextField.getTextfield(),
-              passwordTextField.getTextfieldWithSufix(),
-              confirmPasswordTextField.getTextfieldWithSufix(),
+              passwordTextField,
+              confirmPasswordTextField,
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushReplacement(
