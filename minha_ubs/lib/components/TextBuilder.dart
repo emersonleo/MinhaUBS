@@ -16,7 +16,7 @@ class TextBuilder {
           child: Text(
             text.toString(),
             style: GoogleFonts.montserrat(
-              color: const Color(0xFF00A038),
+              color: const Color(0xFF666666),
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:minha_ubs/constants.dart';
+import 'package:minha_ubs/utils/constants.dart';
 
 import '../components/TextBuilder.dart';
 import '../components/TextFieldBuilder.dart';
@@ -51,7 +51,7 @@ class _RecoveryPasswordState extends State<RecoveryPassword> {
               ),
               Center(
                 child: Text(
-                  constants.message_recovery_passwordemail,
+                  Constants.MESSAGE_RECOVERY_PASSWORD_EMAIL,
                   style: GoogleFonts.montserrat(
                     color: Color(0xFF5C5C5C),
                     fontSize: 14,

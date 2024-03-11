@@ -1,3 +1,4 @@
+import 'package:easy_mask/easy_mask.dart';
 import 'package:flutter/material.dart';
 
 class TextFieldBuilder {
@@ -48,6 +49,22 @@ class TextFieldBuilder {
               });
             },
           ),
+        ),
+      ),
+    );
+  }
+
+  Padding getTextfieldWithMask(TextInputMask inputMask) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+      child: TextField(
+        keyboardType: TextInputType.text,
+        controller: controller,
+        inputFormatters: [inputMask],
+        decoration: InputDecoration(
+          labelText: labelText,
+          focusedBorder: const OutlineInputBorder(),
+          prefixIcon: Icon(icon),
         ),
       ),
     );

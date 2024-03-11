@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 import 'package:minha_ubs/components/StatefullTextFieldBuilder.dart';
 import 'package:minha_ubs/components/TextFieldBuilder.dart';
-import 'package:minha_ubs/screens/recoverypassword.dart';
 import 'package:minha_ubs/screens/signin.dart';
+import 'package:minha_ubs/services/UserService.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -13,21 +14,17 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  // void initState() {
-  //   super.initState();
-  // }
-
-  TextEditingController LoginController = TextEditingController();
-  TextEditingController PasswordController = TextEditingController();
+  TextEditingController loginController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   bool passwordObscureText = true;
+  UserService userService = UserService(Client());
 
   @override
   Widget build(BuildContext context) {
     TextFieldBuilder loginTextField =
-        TextFieldBuilder("Email", Icons.alternate_email, this, LoginController);
+        TextFieldBuilder("Email", Icons.alternate_email, this, loginController);
     StatefullTextFieldBuilder senhaTextField =
-        new StatefullTextFieldBuilder("Senha", Icons.lock, PasswordController);
-    // TextFieldBuilder("Senha", Icons.lock, this, PasswordController);
+        StatefullTextFieldBuilder("Senha", Icons.lock, passwordController);
 
     return Scaffold(
       body: Container(
@@ -40,38 +37,41 @@ class _LoginState extends State<Login> {
               getLogo(),
               loginTextField.getTextfield(),
               senhaTextField,
-              Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const RecoveryPassword()),
-                    );
-                  },
-                  child: Text(
-                    'Esqueci a senha',
-                    style: GoogleFonts.montserrat(
-                      color: Color(0xFF00521D),
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                ),
-              ]),
+              // Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              //   TextButton(
+              //     onPressed: () {
+              //       Navigator.pushReplacement(
+              //         context,
+              //         MaterialPageRoute(
+              //             builder: (context) => const RecoveryPassword()),
+              //       );
+              //     },
+              //     child: Text(
+              //       'Esqueci a senha',
+              //       style: GoogleFonts.montserrat(
+              //         color: const Color(0xFF00521D),
+              //         fontSize: 14,
+              //         fontWeight: FontWeight.bold,
+              //         decoration: TextDecoration.underline,
+              //       ),
+              //     ),
+              //   ),
+              // ]),
               ElevatedButton(
                 onPressed: () {
-                  // Ação para entrar
+                  String login = loginController.text;
+                  String password = passwordController.text;
+                  Map userDataLogin = {"email": login, "senha": password};
+                  userService.loginRequest(userDataLogin);
                 },
-                child: Text('Entrar'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF00A038),
+                  backgroundColor: const Color(0xFF00A038),
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
+                child: const Text('Entrar'),
               ),
               TextButton(
                 onPressed: () {
@@ -83,7 +83,7 @@ class _LoginState extends State<Login> {
                 child: Text(
                   'Cadastre-se',
                   style: GoogleFonts.montserrat(
-                    color: Color(0xFF00521D),
+                    color: const Color(0xFF00521D),
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     decoration: TextDecoration.underline,
