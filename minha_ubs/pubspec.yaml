@@ -38,8 +38,10 @@ dependencies:
   google_fonts: ^6.1.0
   http: ^1.2.0
   easy_mask: ^2.0.1
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
+
   flutter_test:
     sdk: flutter
 

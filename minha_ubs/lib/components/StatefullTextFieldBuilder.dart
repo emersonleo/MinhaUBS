@@ -7,7 +7,8 @@ class StatefullTextFieldBuilder extends StatefulWidget {
   IconData? icon;
 
   StatefullTextFieldBuilder(String labelTextParam, IconData iconParam,
-      TextEditingController controllerParam) {
+      TextEditingController controllerParam,
+      {super.key}) {
     labelText = labelTextParam;
     icon = iconParam;
     controller = controllerParam;
@@ -59,6 +60,5 @@ class _StatefullTextFieldBuilderState extends State<StatefullTextFieldBuilder> {
         ),
       ),
     );
-    ;
   }
 }

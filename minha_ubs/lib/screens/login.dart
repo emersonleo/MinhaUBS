@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
+import 'package:minha_ubs/DTOs/UserDTO.dart';
 import 'package:minha_ubs/components/StatefullTextFieldBuilder.dart';
 import 'package:minha_ubs/components/TextFieldBuilder.dart';
+import 'package:minha_ubs/screens/mainscreen.dart';
 import 'package:minha_ubs/screens/signin.dart';
 import 'package:minha_ubs/services/UserService.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -32,37 +35,27 @@ class _LoginState extends State<Login> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 16),
           child: ListView(
-            //mainAxisAlignment: MainAxisAlignment.center,
             children: [
               getLogo(),
               loginTextField.getTextfield(),
               senhaTextField,
-              // Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              //   TextButton(
-              //     onPressed: () {
-              //       Navigator.pushReplacement(
-              //         context,
-              //         MaterialPageRoute(
-              //             builder: (context) => const RecoveryPassword()),
-              //       );
-              //     },
-              //     child: Text(
-              //       'Esqueci a senha',
-              //       style: GoogleFonts.montserrat(
-              //         color: const Color(0xFF00521D),
-              //         fontSize: 14,
-              //         fontWeight: FontWeight.bold,
-              //         decoration: TextDecoration.underline,
-              //       ),
-              //     ),
-              //   ),
-              // ]),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   String login = loginController.text;
                   String password = passwordController.text;
                   Map userDataLogin = {"email": login, "senha": password};
-                  userService.loginRequest(userDataLogin);
+                  Future<UserDTO> userAuthenticated =
+                      userService.loginRequest(userDataLogin);
+                  final prefs = await SharedPreferences.getInstance();
+                  if (prefs.getString('user') != null) {
+                    //trocar pra is instance of{
+                    // ignore: use_build_context_synchronously
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MainScreen()),
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF00A038),
