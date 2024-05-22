@@ -48,7 +48,6 @@ class _LoginState extends State<Login> {
                       userService.loginRequest(userDataLogin);
                   final prefs = await SharedPreferences.getInstance();
                   if (prefs.getString('user') != null) {
-                    //trocar pra is instance of{
                     // ignore: use_build_context_synchronously
                     Navigator.pushReplacement(
                       context,

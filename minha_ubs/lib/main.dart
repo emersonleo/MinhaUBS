@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:minha_ubs/screens/login.dart';
+import 'package:minha_ubs/screens/familiesandresidents.dart';
 
 void main() {
   runApp(const MyApp());
@@ -41,7 +41,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
     Timer(const Duration(seconds: 1), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const Login()),
+        MaterialPageRoute(builder: (context) => const FamiliesAndResidents()),
       );
     });
   }
