@@ -17,7 +17,6 @@ class UserService {
     http.Response response = await httpClient.post(Uri.parse(url),
         headers: headers, body: const JsonEncoder().convert(userData));
     if (response.statusCode == 200) {
-      print(response.body);
       return response.body;
     } else {
       throw Exception("Erro ao obter os dados: ${response.statusCode}");

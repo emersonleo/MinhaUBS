@@ -29,4 +29,21 @@ class ButtonBuilder {
       ),
     );
   }
+
+  static FilledButton getFilledButton(
+      String labelText, Function() redirect, int colorButton) {
+    return FilledButton(
+      onPressed: redirect,
+      style: FilledButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          backgroundColor: Color(colorButton)),
+      child: Column(
+        children: <Widget>[
+          Text(labelText, style: const TextStyle(fontSize: 14)),
+        ],
+      ),
+    );
+  }
 }

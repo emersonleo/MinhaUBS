@@ -1,13 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:minha_ubs/components/ActionCardsBuilder.dart';
+import 'package:minha_ubs/components/RegisterCaseDialog.dart';
+import 'package:minha_ubs/components/RegisterVisitDialog.dart';
 import 'package:minha_ubs/screens/basichealthunit.dart';
 import 'package:minha_ubs/services/BHUService.dart';
 import 'package:minha_ubs/utils/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../components/RegisterCaseDialog.dart';
+import '../DTOs/FamilyDTO.dart';
+import '../DTOs/PersonDTO.dart';
+import '../DTOs/UserDTO.dart';
 import '../components/TextBuilder.dart';
-import '../components/TextFieldBuilder.dart';
 
 class FamiliesAndResidents extends StatefulWidget {
   const FamiliesAndResidents({super.key});
@@ -21,29 +27,31 @@ enum TypeListFamilyResident { family, resident }
 class _FamiliesAndResidentsState extends State<FamiliesAndResidents> {
   TextEditingController controllerSearch = TextEditingController();
   TypeListFamilyResident? typeList = TypeListFamilyResident.family;
-  BHUService bhuService = BHUService(Client());
+  Future<List<FamilyDTO>> families = BHUService(Client()).getBHUFamilies(1);
+  Future<List<PersonDTO>> residents = BHUService(Client()).getBHUResidents(1);
 
-  Future<List<dynamic>> listaCards() {
-    return typeList == TypeListFamilyResident.family
-        ? bhuService.getBHUFamilies(1)
-        : bhuService.getBHUResidents(1);
+  Future<List<dynamic>> listaCards({String? searchValue}) async {
+    Future<List<dynamic>> resultList =
+        typeList == TypeListFamilyResident.family ? families : residents;
+    return resultList;
   }
 
   @override
   Widget build(BuildContext context) {
     TextBuilder titleTextFamilyResidents = TextBuilder("Famílias e Moradores");
-    TextFieldBuilder familyResidentTextField = TextFieldBuilder(
-        "Buscar família ou morador", Icons.search, this, controllerSearch);
-    dynamic cardItens = bhuService.getBHUFamilies(1);
+
     List<String> menuResident = [
       Constants.registerCaseOption,
       Constants.sendMessageOption
     ];
     List<String> menuFamily = [
-      Constants.registerCaseOption,
       Constants.registerVisitOption,
       Constants.viewResidentsOption
     ];
+
+    String? userAuthenticated;
+    final prefs = SharedPreferences.getInstance()
+        .then((value) => {userAuthenticated = value.getString("user")});
 
     return Scaffold(
       body: Container(
@@ -85,7 +93,7 @@ class _FamiliesAndResidentsState extends State<FamiliesAndResidents> {
                             onChanged: (TypeListFamilyResident? value) {
                               setState(() {
                                 typeList = value;
-                                cardItens = bhuService.getBHUFamilies(1);
+                                controllerSearch.clear();
                               });
                             },
                           ),
@@ -98,7 +106,7 @@ class _FamiliesAndResidentsState extends State<FamiliesAndResidents> {
                             onChanged: (TypeListFamilyResident? value) {
                               setState(() {
                                 typeList = value;
-                                cardItens = bhuService.getBHUResidents(1);
+                                controllerSearch.clear();
                               });
                             },
                           ),
@@ -107,7 +115,25 @@ class _FamiliesAndResidentsState extends State<FamiliesAndResidents> {
                     ),
                     Row(
                       children: [
-                        Expanded(child: familyResidentTextField.getTextfield()),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 16),
+                            child: TextField(
+                              keyboardType: TextInputType.text,
+                              controller: controllerSearch,
+                              onChanged: (text) {
+                                listaCards(searchValue: text);
+                                setState(() {});
+                              },
+                              decoration: const InputDecoration(
+                                labelText: "Buscar família ou morador",
+                                focusedBorder: OutlineInputBorder(),
+                                prefixIcon: Icon(Icons.search),
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                     Expanded(
@@ -128,9 +154,12 @@ class _FamiliesAndResidentsState extends State<FamiliesAndResidents> {
                                 child: Text(
                                     'Não foram encontrados dados de famílias ou moradores.'));
                           } else {
-                            final List<dynamic>? persons = snapshot!.data;
+                            var filteredItems = snapshot.data!.where((item) {
+                              return item.nome.contains(controllerSearch.text);
+                            }).toList();
+                            final List<dynamic> persons = filteredItems;
                             return ListView.builder(
-                              itemCount: persons?.length,
+                              itemCount: filteredItems?.length,
                               itemBuilder: (context, index) {
                                 return Card(
                                   shape: RoundedRectangleBorder(
@@ -154,19 +183,29 @@ class _FamiliesAndResidentsState extends State<FamiliesAndResidents> {
                                         }
                                         return [];
                                       },
-                                      onSelected: (value) {
+                                      onSelected: (value) async {
                                         switch (value) {
                                           case Constants.registerCaseOption:
-                                            registerCaseDialog(context);
+                                            showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    RegisterCaseDialog(person: persons![index].id));
                                             break;
                                           case Constants.sendMessageOption:
-                                            registerCaseDialog(context);
+                                            //registerCaseDialog(context);
                                             break;
                                           case Constants.registerVisitOption:
-                                            registerCaseDialog(context);
+                                            String familyId =
+                                                persons![index].id;
+                                            int agentId = UserDTO.fromJson(
+                                                    jsonDecode(
+                                                        userAuthenticated!))!
+                                                .id;
+                                            registerVisitDialog(
+                                                context, familyId, agentId);
                                             break;
                                           case Constants.viewResidentsOption:
-                                            registerCaseDialog(context);
+                                            //registerCaseDialog(context);
                                             break;
                                         }
                                       },
