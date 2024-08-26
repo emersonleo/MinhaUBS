@@ -189,7 +189,12 @@ class _FamiliesAndResidentsState extends State<FamiliesAndResidents> {
                                             showDialog(
                                                 context: context,
                                                 builder: (context) =>
-                                                    RegisterCaseDialog(person: persons![index].id));
+                                                    RegisterCaseDialog(
+                                                      idPerson:
+                                                          persons![index].id,
+                                                      userAuthenticated:
+                                                          userAuthenticated,
+                                                    ));
                                             break;
                                           case Constants.sendMessageOption:
                                             //registerCaseDialog(context);

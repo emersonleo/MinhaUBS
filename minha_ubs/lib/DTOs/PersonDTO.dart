@@ -5,7 +5,7 @@ class PersonDTO {
       // required this.fone,
       required this.cpf});
 
-  final String id;
+  final int id;
   final String nome;
   // final String fone;
   final String cpf;

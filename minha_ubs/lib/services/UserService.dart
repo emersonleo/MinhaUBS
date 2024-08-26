@@ -24,12 +24,13 @@ class UserService {
   }
 
   Future<UserDTO> loginRequest(Map userData) async {
+    final prefs = await SharedPreferences.getInstance();
     String url = "${Constants.ENVIRONMENT_HOST}${Constants.USER_PATH}login";
     Map<String, String> headers = {"content-type": "application/json"};
     http.Response response = await httpClient.post(Uri.parse(url),
         headers: headers, body: const JsonEncoder().convert(userData));
-    final prefs = await SharedPreferences.getInstance();
     if (response.statusCode == 200) {
+      print(response.body);
       final UserDTO userAuthenticated =
           UserDTO.fromJson(jsonDecode(response.body));
       prefs.setString('user', response.body);

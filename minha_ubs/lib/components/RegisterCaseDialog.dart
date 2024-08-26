@@ -7,9 +7,11 @@ import 'ButtonBuilder.dart';
 import 'TextBuilder.dart';
 
 class RegisterCaseDialog extends StatefulWidget {
-  final String person;
+  final int idPerson;
+  final String? userAuthenticated;
 
-  const RegisterCaseDialog({super.key, required this.person});
+  const RegisterCaseDialog(
+      {super.key, required this.idPerson, required this.userAuthenticated});
 
   @override
   State<RegisterCaseDialog> createState() => _RegisterCaseDialogState();
@@ -31,10 +33,11 @@ class _RegisterCaseDialogState extends State<RegisterCaseDialog> {
 
   CaseService caseService = CaseService(Client());
 
-  void registerCase() {
+  Future<void> registerCase() async {
     int selectedCase = Utils.getCaseId(selectedValueSecondRow?.toUpperCase());
+    print(widget.userAuthenticated);
     if (selectedCase != 0) {
-      caseService.registerCase(1, 11, int.parse(widget.person), selectedCase);
+      caseService.registerCase(1, 11, widget.idPerson, selectedCase);
       Navigator.of(context).pop();
     }
   }
