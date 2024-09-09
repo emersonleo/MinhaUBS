@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:minha_ubs/components/ActionCardsBuilder.dart';
 import 'package:minha_ubs/components/RegisterCaseDialog.dart';
@@ -57,7 +58,7 @@ class _FamiliesAndResidentsState extends State<FamiliesAndResidents> {
       body: Container(
         color: const Color(0xFFF5F5F5),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 26),
           child: Center(
             child: Stack(
               children: [
@@ -80,7 +81,17 @@ class _FamiliesAndResidentsState extends State<FamiliesAndResidents> {
                               },
                               icon: const Icon(Icons.arrow_back)),
                         ),
-                        titleTextFamilyResidents.getTitleText(),
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            "Famílias e Moradores",
+                            style: GoogleFonts.montserrat(
+                              color: const Color(0xFF5C5C5C),
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                     Row(
@@ -100,7 +111,9 @@ class _FamiliesAndResidentsState extends State<FamiliesAndResidents> {
                         ),
                         Expanded(
                           child: RadioListTile<TypeListFamilyResident>(
-                            title: const Text('Moradores'),
+                            title: const FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text('Moradores')),
                             value: TypeListFamilyResident.resident,
                             groupValue: typeList,
                             onChanged: (TypeListFamilyResident? value) {

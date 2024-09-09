@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minha_ubs/screens/familiesandresidents.dart';
@@ -25,7 +26,6 @@ class _BasicHealthUnitState extends State<BasicHealthUnit> {
             child: ListView(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -41,40 +41,48 @@ class _BasicHealthUnitState extends State<BasicHealthUnit> {
                           },
                           icon: const Icon(Icons.arrow_back)),
                     ),
-                    Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Row(
-                            children: [
-                              Center(
-                                child: Text(
-                                  "PSF PEDREIRA MANGUEIRA",
-                                  style: GoogleFonts.montserrat(
-                                    color: const Color(0xFF5C5C5C),
-                                    fontSize: 28,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 5, vertical: 5),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: AutoSizeText(
+                                "PSF PEDREIRA MANGUEIRA",
+                                style: GoogleFonts.montserrat(
+                                  color: const Color(0xFF5C5C5C),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
                                 ),
+                                minFontSize: 14,
+                                stepGranularity: 1.0,
+                                wrapWords: true,
+                                softWrap: true,
                               ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Center(
-                                child: Text(
-                                  "R André Vidal Negreiros, 324 - Mangueira",
-                                  style: GoogleFonts.montserrat(
-                                    color: const Color(0xFF5C5C5C),
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                            ),
+                            FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Row(
+                                children: [
+                                  Center(
+                                    child: Text(
+                                      "R André Vidal Negreiros, 324 - Mangueira",
+                                      style: GoogleFonts.montserrat(
+                                        color: const Color(0xFF5C5C5C),
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

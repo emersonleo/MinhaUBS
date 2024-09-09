@@ -25,13 +25,10 @@ class _MainScreenState extends State<MainScreen> {
           child: Center(
               child: ListView(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              Stack(
                 children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 5, vertical: 7),
+                  Align(
+                    alignment: Alignment.topLeft,
                     child: IconButton(
                         color: const Color(0xFF00A038),
                         onPressed: () async {
@@ -45,37 +42,40 @@ class _MainScreenState extends State<MainScreen> {
                         },
                         icon: const Icon(Icons.arrow_back)),
                   ),
-                  Center(
+                  Align(
+                    alignment: Alignment.center,
                     child: Text(
                       "Olá Lindalva",
                       style: GoogleFonts.montserrat(
                         color: const Color(0xFF5C5C5C),
-                        fontSize: 28,
+                        fontSize: 30,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ButtonBuilder.getOutlinedButton(
-                      "Meu posto", Icons.local_hospital, () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BasicHealthUnit()),
-                    );
-                  }),
-                  ButtonBuilder.getOutlinedButton("Visitas", Icons.house, () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Visit()),
-                    );
-                  }),
-                ],
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ButtonBuilder.getOutlinedButton(
+                        "Meu posto", Icons.local_hospital, () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const BasicHealthUnit()),
+                      );
+                    }),
+                    ButtonBuilder.getOutlinedButton("Visitas", Icons.house, () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Visit()),
+                      );
+                    }),
+                  ],
+                ),
               )
             ],
           )),

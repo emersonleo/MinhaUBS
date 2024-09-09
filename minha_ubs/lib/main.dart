@@ -49,7 +49,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFFF5F5F5),
+      color: const Color(0xFFF5F5F5),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -57,7 +57,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
             Image.asset('images/minhaUbsICon.png', width: 150, height: 150),
             Text('Minha UBS',
                 style: GoogleFonts.notoSans(
-                  color: Color(0xFF00A038),
+                  color: const Color(0xFF00A038),
                   //olor: Colors.green,
                   fontSize: 24,
                   fontWeight: FontWeight.bold,

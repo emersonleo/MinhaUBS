@@ -4,12 +4,12 @@ class ButtonBuilder {
   static Padding getOutlinedButton(
       String labelText, IconData buttonIcon, Null Function() redirect) {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.all(5.0),
       child: Column(
         children: [
           SizedBox(
-            width: 200,
-            height: 100,
+            width: 150,
+            height: 95,
             child: OutlinedButton(
               onPressed: redirect,
               style: OutlinedButton.styleFrom(
