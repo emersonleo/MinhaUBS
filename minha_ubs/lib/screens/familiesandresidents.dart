@@ -219,8 +219,19 @@ class _FamiliesAndResidentsState extends State<FamiliesAndResidents> {
                                                     jsonDecode(
                                                         userAuthenticated!))!
                                                 .id;
-                                            registerVisitDialog(
-                                                context, familyId, agentId);
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) =>
+                                                  RegisterVisitDialog(
+                                                      idFamily:
+                                                          familyId.toString(),
+                                                      idAgent:
+                                                          agentId.toString(),
+                                                      idBHU: "1",
+                                                      nameFamily:
+                                                          persons![index].nome),
+                                            );
+
                                             break;
                                           case Constants.viewResidentsOption:
                                             //registerCaseDialog(context);

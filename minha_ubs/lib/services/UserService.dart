@@ -30,7 +30,6 @@ class UserService {
     http.Response response = await httpClient.post(Uri.parse(url),
         headers: headers, body: const JsonEncoder().convert(userData));
     if (response.statusCode == 200) {
-      print(response.body);
       final UserDTO userAuthenticated =
           UserDTO.fromJson(jsonDecode(response.body));
       prefs.setString('user', response.body);

@@ -6,6 +6,10 @@ class Constants {
   static String RESIDENT_BHU_PATH = "posto/pessoas?posto=";
   static String FAMILY_BHU_PATH = "posto/familia?posto=";
   static String REGISTER_CASE_PATH = "posto/registrarcaso";
+  static String LIST_VISIT_PATH = "visita/listarvisitas";
+  static String CREATE_VISIT_PATH = "visita/visita";
+
+  //Mensagens
   static const String registerCaseOption = "Registrar Caso";
   static const String sendMessageOption = "Enviar mensagem";
   static const String registerVisitOption = "Registrar Visita";

@@ -31,4 +31,14 @@ class Utils {
 
     return JsonEncoder().convert(registerCaseBody);
   }
+
+  static String buildVisitBody(String BHUId, String agentId, String familyId) {
+    Map visitBody = {
+      "posto": BHUId,
+      "agente": agentId,
+      "familia": familyId,
+    };
+
+    return JsonEncoder().convert(visitBody);
+  }
 }

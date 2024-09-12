@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minha_ubs/screens/familiesandresidents.dart';
 import 'package:minha_ubs/screens/mainscreen.dart';
+import 'package:minha_ubs/screens/report_heatmap.dart';
 import 'package:minha_ubs/screens/ubsnews.dart';
 
 import '../components/ButtonBuilder.dart';
@@ -105,6 +106,14 @@ class _BasicHealthUnitState extends State<BasicHealthUnit> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => const FamiliesAndResidents()),
+                      );
+                    }),
+                    ButtonBuilder.getOutlinedButton(
+                        "Relatório de Casos", Icons.note_alt_rounded, () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ReportHeatmap()),
                       );
                     }),
                   ],

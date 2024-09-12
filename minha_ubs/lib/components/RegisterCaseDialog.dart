@@ -35,7 +35,6 @@ class _RegisterCaseDialogState extends State<RegisterCaseDialog> {
 
   Future<void> registerCase() async {
     int selectedCase = Utils.getCaseId(selectedValueSecondRow?.toUpperCase());
-    print(widget.userAuthenticated);
     if (selectedCase != 0) {
       caseService.registerCase(1, 11, widget.idPerson, selectedCase);
       Navigator.of(context).pop();
