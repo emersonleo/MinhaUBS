@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minha_ubs/screens/familiesandresidents.dart';
 import 'package:minha_ubs/screens/mainscreen.dart';
-import 'package:minha_ubs/screens/report_heatmap.dart';
+import 'package:minha_ubs/screens/report_cases.dart';
 import 'package:minha_ubs/screens/ubsnews.dart';
 
 import '../components/ButtonBuilder.dart';
@@ -113,7 +113,7 @@ class _BasicHealthUnitState extends State<BasicHealthUnit> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const ReportHeatmap()),
+                            builder: (context) => const ReportCases()),
                       );
                     }),
                   ],

@@ -20,6 +20,16 @@ class Utils {
     }
   }
 
+  static String buildRegisterNoticeBody(int BHUId, int agentId, String notice) {
+    Map registerNoticeBody = {
+      "posto": "$BHUId",
+      "agente": "$agentId",
+      "noticia": notice,
+    };
+
+    return const JsonEncoder().convert(registerNoticeBody);
+  }
+
   static String buildRegisterCaseBody(
       int BHUId, int agentId, int personId, int caseId) {
     Map registerCaseBody = {
