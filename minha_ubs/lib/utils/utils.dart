@@ -51,4 +51,17 @@ class Utils {
 
     return JsonEncoder().convert(visitBody);
   }
+
+  static String buildListCaseBody(String BHUId, String agentId, String caseId,
+      String startDate, String endDate) {
+    Map visitBody = {
+      "posto": BHUId,
+      "agente": agentId,
+      "caso": caseId,
+      "dataInicio": startDate,
+      "dataFim": endDate
+    };
+
+    return JsonEncoder().convert(visitBody);
+  }
 }

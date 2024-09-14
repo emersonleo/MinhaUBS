@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_heatmap/flutter_map_heatmap.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:minha_ubs/DTOs/CaseDTO.dart';
+import 'package:minha_ubs/screens/report_cases.dart';
+import 'package:minha_ubs/services/CaseService.dart';
 
 class ReportHeatmap extends StatefulWidget {
   const ReportHeatmap({super.key});
@@ -11,151 +16,112 @@ class ReportHeatmap extends StatefulWidget {
 }
 
 class _ReportCasesState extends State<ReportHeatmap> {
+  CaseService caseService = CaseService(Client());
+
+  Future<List<WeightedLatLng>> getCoordinates() async {
+    Future<List<CaseDTO>> cases = CaseService(Client())
+        .listCases("1", "11", "3", "17/08/2024", "20/09/2024");
+
+    List<WeightedLatLng> casesRegistered = [];
+    List<CaseDTO> casesDTOList = [];
+    await cases.then((listCases) => {casesDTOList = listCases.toList()});
+
+    casesDTOList.forEach((caseRegistered) => casesRegistered.add(WeightedLatLng(
+        LatLng(double.parse(caseRegistered.latitude),
+            double.parse(caseRegistered.longitude)),
+        1)));
+    return casesRegistered;
+  }
+
+  final List<WeightedLatLng> coordinatesCases = [];
+
   @override
   Widget build(BuildContext context) {
-    final List<List<String>> coordinates = [
-      // ["-8.1087064743042", "-35.08354187011719"],
-      // ["-8.1087064743042", "-35.08354187011719"],
-      // ["-8.1087064743042", "-35.08354187011719"],
-      // ["-8.119686138656748", "-35.09710723832727"],
-      // ["-8.12000757540068", "-35.09700075835775"],
-      // ["-8.11855877526785", "-35.09663701700321"],
-      // ["-8.11034403562939", "-35.09772179360201"],
-      //aqui é na pedreira
-      ["-8.112438545637744", "-35.10023875411188"],
-      ["-8.11514232240235", "-35.09650622872174"],
-      ["-8.113217915951482", "-35.09798924497807"],
-      ["-8.114291037184207", "-35.093880474712904"],
-      ["-8.113574587244655", "-35.099220656998604"],
-      ["-8.114110969751094", "-35.10034718481518"],
-      ["-8.112438545637744", "-35.10023875411188"],
-      ["-8.1132293902035", "-35.10041692225144"],
-      ["-8.112438545637744", "-35.10023875411188"],
-      ["-8.114631419431166", "-35.098936342844304"],
-      ["-8.114110969751094", "-35.10034718481518"],
-      ["-8.112438545637744", "-35.10023875411188"],
-      ["-8.114631419431166", "-35.098936342844304"],
-      ["-8.115003168781646", "-35.09839453660871"],
-      ["-8.113217915951482", "-35.09798924497807"],
-      ["-8.114631419431166", "-35.098936342844304"],
-      ["-8.111847291284917", "-35.09738293749384"],
-      ["-8.115492837482374", "-35.09938472837492"],
-      ["-8.113948293847928", "-35.09584918374918"],
-      ["-8.114837482374928", "-35.10093847293847"],
-      ["-8.112948374918374", "-35.09838293847293"],
-      ["-8.111738472938472", "-35.09684918274918"],
-      ["-8.113827491827491", "-35.09918374918274"],
-      ["-8.115928374938472", "-35.09728374928374"],
-      ["-8.114182937492837", "-35.09673847293847"],
-      ["-8.113849183749183", "-35.10029384729384"],
-      ["-8.112748394827491", "-35.09574839482749"],
-      ["-8.114938472938472", "-35.09928374918274"],
-      ["-8.111938472938472", "-35.09784918374918"],
-      ["-8.115394827491827", "-35.10093847293847"],
-      ["-8.113948374918374", "-35.09638293847293"],
-      ["-8.112849183749182", "-35.09593847293847"],
-      ["-8.114283749182749", "-35.10084918374918"],
-      ["-8.111948374938472", "-35.09629384729384"],
-      ["-8.113748392847928", "-35.09918374918374"],
-      ["-8.115938472938472", "-35.09829384729384"],
-      ["-8.114748392847392", "-35.09584918384918"],
-      ["-8.113938472938472", "-35.10129384729384"],
-      ["-8.112839183749183", "-35.09738472837492"],
-      ["-8.115738472938472", "-35.09973847293847"],
-      ["-8.114839183749183", "-35.09618374918234"],
-      ["-8.111948374938472", "-35.10073847293847"],
-      ["-8.113849183749182", "-35.09549384729384"],
-      ["-8.115394827491827", "-35.09884918374918"],
-      ["-8.112749183749183", "-35.10029384729384"],
-      ["-8.114948374938472", "-35.09693847293847"],
-      ["-8.112781345123456", "-35.10105612345678"],
-      ["-8.113908374829011", "-35.09699821883917"],
-      ["-8.114682394823412", "-35.09546729387465"],
-      ["-8.111539837495837", "-35.10027398432749"],
-      ["-8.115098374918234", "-35.09928374918234"],
-      ["-8.110493748123485", "-35.09984918234129"],
-      ["-8.113874913248765", "-35.09784291823749"],
-      ["-8.112938472938473", "-35.09829384723847"],
-      ["-8.114238472938473", "-35.09919384723984"],
-      ["-8.115482374918273", "-35.09547384729384"],
-      ["-8.111849183749182", "-35.10129384729384"],
-      ["-8.113874928374928", "-35.09738472834729"],
-      ["-8.112183749283749", "-35.09574839284729"],
-      ["-8.115293847293847", "-35.09638472837492"],
-      ["-8.110948372948372", "-35.09929384729384"],
-      ["-8.114938472938472", "-35.09693847293847"],
-      ["-8.111849183749182", "-35.09984918374918"],
-      ["-8.113748192748192", "-35.09628374918234"],
-      ["-8.114849183749182", "-35.09834918273491"],
-      ["-8.112948374918374", "-35.09528374928374"],
-      ["-8.113217915951482", "-35.09798924497807"], // Repetido 6 vezes
-      ["-8.113217915951482", "-35.09798924497807"],
-      ["-8.113217915951482", "-35.09798924497807"],
-      ["-8.113217915951482", "-35.09798924497807"],
-      ["-8.113217915951482", "-35.09798924497807"],
-      ["-8.113217915951482", "-35.09798924497807"],
-
-      ["-8.112438545637744", "-35.10023875411188"], // Repetido 7 vezes
-      ["-8.112438545637744", "-35.10023875411188"],
-      ["-8.112438545637744", "-35.10023875411188"],
-      ["-8.112438545637744", "-35.10023875411188"],
-      ["-8.112438545637744", "-35.10023875411188"],
-      ["-8.112438545637744", "-35.10023875411188"],
-      ["-8.112438545637744", "-35.10023875411188"],
-
-      ["-8.114110969751094", "-35.10034718481518"], // Repetido 5 vezes
-      ["-8.114110969751094", "-35.10034718481518"],
-      ["-8.114110969751094", "-35.10034718481518"],
-      ["-8.114110969751094", "-35.10034718481518"],
-      ["-8.114110969751094", "-35.10034718481518"],
-
-      ["-8.115003168781646", "-35.09839453660871"], // Repetido 6 vezes
-      ["-8.115003168781646", "-35.09839453660871"],
-      ["-8.115003168781646", "-35.09839453660871"],
-      ["-8.115003168781646", "-35.09839453660871"],
-      ["-8.115003168781646", "-35.09839453660871"],
-      ["-8.115003168781646", "-35.09839453660871"],
-
-      ["-8.114631419431166", "-35.098936342844304"], // Repetido 7 vezes
-      ["-8.114631419431166", "-35.098936342844304"],
-      ["-8.114631419431166", "-35.098936342844304"],
-      ["-8.114631419431166", "-35.098936342844304"],
-      ["-8.114631419431166", "-35.098936342844304"],
-      ["-8.114631419431166", "-35.098936342844304"],
-      ["-8.114631419431166", "-35.098936342844304"],
-
-      ["-8.114291037184207", "-35.093880474712904"], // Repetido 5 vezes
-      ["-8.114291037184207", "-35.093880474712904"],
-      ["-8.114291037184207", "-35.093880474712904"],
-      ["-8.114291037184207", "-35.093880474712904"],
-      ["-8.114291037184207", "-35.093880474712904"]
-    ];
-
-    // Conversão para uma lista de WeightedLatLng
-    final List<WeightedLatLng> data = coordinates.map((coord) {
-      return WeightedLatLng(
-          LatLng(double.parse(coord[0]), double.parse(coord[1])), 1);
-    }).toList();
-
-    final map = FlutterMap(
-      options: const MapOptions(center: LatLng(-8.11777, -35.0931), zoom: 15.0),
-      children: [
-        TileLayer(
-            urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-            subdomains: ['a', 'b', 'c']),
-        if (data.isNotEmpty)
-          HeatMapLayer(
-            heatMapDataSource: InMemoryHeatMapDataSource(data: data),
-            heatMapOptions: HeatMapOptions(gradient: {
-              0.25: Colors.yellow,
-              0.55: Colors.amber,
-              0.85: Colors.orange,
-              1.0: Colors.red
-            }, minOpacity: 1),
-          )
-      ],
+    return Scaffold(
+      body: Container(
+        color: const Color(0xFFF5F5F5),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 26),
+          child: Center(
+            child: Stack(
+              children: [
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 7),
+                          child: IconButton(
+                              color: const Color(0xFF00A038),
+                              onPressed: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ReportCases()),
+                                );
+                              },
+                              icon: const Icon(Icons.arrow_back)),
+                        ),
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            "Relatório De Casos",
+                            style: GoogleFonts.montserrat(
+                              color: const Color(0xFF5C5C5C),
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    FutureBuilder(
+                        future: getCoordinates(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return CircularProgressIndicator(); // Exibe um loader enquanto espera
+                          } else if (snapshot.hasError) {
+                            return Text('Erro: ${snapshot.error}');
+                          } else {
+                            return Expanded(
+                              child: FlutterMap(
+                                options: const MapOptions(
+                                    initialCenter: LatLng(-8.11777, -35.0931),
+                                    initialZoom: 15.0),
+                                children: [
+                                  TileLayer(
+                                      urlTemplate:
+                                          "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                      subdomains: ['a', 'b', 'c']),
+                                  if (snapshot.data!.isNotEmpty)
+                                    HeatMapLayer(
+                                      heatMapDataSource:
+                                          InMemoryHeatMapDataSource(
+                                              data: snapshot.data!),
+                                      heatMapOptions: HeatMapOptions(
+                                          blurFactor: 1,
+                                          layerOpacity: 0.6,
+                                          radius: 40,
+                                          gradient:
+                                              HeatMapOptions.defaultGradient,
+                                          minOpacity: 0.1),
+                                    )
+                                ],
+                              ),
+                            );
+                          }
+                        })
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
-
-    return map;
+    ;
   }
 }

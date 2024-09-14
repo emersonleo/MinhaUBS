@@ -52,7 +52,7 @@ class _VisitState extends State<Visit> {
 
   Future<List<dynamic>> visitList(
       [String? dateStart = "", String? dateEnd = ""]) async {
-    return VisitService(Client()).getVisits(1, dateStart, dateEnd);
+    return await VisitService(Client()).getVisits(1, dateStart, dateEnd);
   }
 
   @override

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:minha_ubs/screens/ubsnews.dart';
+import 'package:minha_ubs/screens/login.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,7 +44,7 @@ class _ScreenSplashState extends State<ScreenSplash> {
     Timer(const Duration(seconds: 1), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const UBSNews()),
+        MaterialPageRoute(builder: (context) => const Login()),
       );
     });
   }

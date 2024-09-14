@@ -8,6 +8,7 @@ class Constants {
   static String RESIDENT_BHU_PATH = "posto/pessoas?posto=";
   static String FAMILY_BHU_PATH = "posto/familia?posto=";
   static String REGISTER_CASE_PATH = "posto/registrarcaso";
+  static String LIST_CASE_PATH = "casos/listarcasos";
   static String LIST_VISIT_PATH = "visita/listarvisitas";
   static String CREATE_VISIT_PATH = "visita/visita";
   static String CREATE_NOTICE_PATH = "noticia/criarnoticia";
